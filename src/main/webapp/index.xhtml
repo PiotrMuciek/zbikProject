@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <link rel="stylesheet" type="text/css" href="style.css"></link>
+    </h:head>
+    <h:body>
+
+        <p:outputPanel layout="block" id="container">
+            <p:outputPanel layout="block" id="header" >
+                Add new Person data
+            </p:outputPanel>
+
+            <p:outputPanel id="content" layout="block">
+                <p:tabView id = "tabview">
+                    <p:tab title="Add Person" id = "tab1">
+                        <h:form>
+                            <p:panelGrid columns="2">
+
+                                <p:outputLabel for="firstname" value="Firstname:"></p:outputLabel> <p:inputText id = "firstname" value="#{personMB.person.firstname}"></p:inputText>
+                                <p:outputLabel for="surname" value="Surname:"></p:outputLabel> <p:inputText id ="surname" value="#{personMB.person.surname}"></p:inputText>
+                                <p:outputLabel for="city" value="City"></p:outputLabel> <p:inputText id = "city" value="#{personMB.person.city}"></p:inputText>
+                                <p:outputLabel for="field1" value="field1 : " ></p:outputLabel> <p:inputText id = "field1" value="#{personMB.person.field1}"></p:inputText>
+                                <p:outputLabel for="field2" value="field2 : " ></p:outputLabel> <p:inputText id = "field2" value="#{personMB.person.field2}"></p:inputText>
+                                <p:outputLabel for="field3" value="field3 : " ></p:outputLabel> <p:inputText id = "field3" value="#{personMB.person.field3}"></p:inputText>
+                                <p:outputLabel for="value1" value="value1 : " ></p:outputLabel> <p:inputText id = "value1" value="#{personMB.person.value1}"></p:inputText>
+                                <p:outputLabel for="value2" value="value2 : " ></p:outputLabel> <p:inputText id = "value2" value="#{personMB.person.value2}"></p:inputText>
+                                <p:outputLabel for="value3" value="value3 : " ></p:outputLabel> <p:inputText id = "value3" value="#{personMB.person.value3}"></p:inputText> 
+
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Dodaj" action="#{personMB.addPerson()}" update=":tabview:tab1"></p:commandButton>
+                                </f:facet>
+                            </p:panelGrid>
+                        </h:form>
+
+                    </p:tab>
+
+                    <p:tab title = "Persons" id = "tab2">
+
+                        <h:form id = "form">
+                            <p:dataTable  value="#{personMB.list}" var="person" selection = "#{personMB.selectedPerson}" selectionMode="single" rowKey="#{person.firstname}">
+                                <p:column headerText="First name">
+                                    #{person.firstname}
+                                </p:column>
+
+                                <p:column headerText="Surname">
+                                    #{person.surname}
+                                </p:column>
+
+                                <p:column headerText="City">
+                                    #{person.city}
+                                </p:column>
+
+                                <p:column headerText="field 1">
+                                    #{person.value1}
+                                </p:column>
+
+                                <f:facet name="footer">
+                                    <p:commandButton id="deleteButton" value = "Delete" action = "#{personMB.deletePerson()}" update=":tabview" ></p:commandButton>
+                                    <p:commandButton id="updateButton" value = "Update" onclick = "dlg.show()"  ></p:commandButton>
+                                </f:facet>
+                            </p:dataTable>
+                        </h:form>
+                    </p:tab>
+
+                </p:tabView>
+
+            </p:outputPanel>
+
+            <p:dialog id="dialog" header="Login" widgetVar="dlg" resizable="false">
+
+                <h:form>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:outputLabel for="firstnamed" value="Firstname:"></p:outputLabel> <p:inputText id = "firstnamed" value="#{personMB.selectedPerson.firstname}" required="true" ></p:inputText>
+                    <p:outputLabel for="surname" value="Surname:"></p:outputLabel> <p:inputText id ="surname" value="#{personMB.selectedPerson.surname}" required="true"></p:inputText>
+                    <p:outputLabel for="city" value="City"></p:outputLabel> <p:inputText id = "city" value="#{personMB.selectedPerson.city}"></p:inputText>
+                    <p:outputLabel for="field1d" value="field1 : " ></p:outputLabel> <p:inputText id = "field1d" value="#{personMB.selectedPerson.field1}" ></p:inputText>
+                    <p:outputLabel for="field2d" value="field2 : " ></p:outputLabel> <p:inputText id = "field2d" value="#{personMB.selectedPerson.field2}"></p:inputText>
+                    <p:outputLabel for="field3d" value="field3 : " ></p:outputLabel> <p:inputText id = "field3d" value="#{personMB.selectedPerson.field3}"></p:inputText>
+                    <p:outputLabel for="value1d" value="value1 : " ></p:outputLabel> <p:inputText id = "value1d" value="#{personMB.selectedPerson.value1}"></p:inputText>
+                    <p:outputLabel for="value2d" value="value2 : " ></p:outputLabel> <p:inputText id = "value2d" value="#{personMB.selectedPerson.value2}"></p:inputText>
+                    <p:outputLabel for="value3d" value="value3 : " ></p:outputLabel> <p:inputText id = "value3d" value="#{personMB.selectedPerson.value3}"></p:inputText>  
+
+                    <f:facet name="footer">
+                        <p:commandButton id="loginButton" value="Update"
+                                         actionListener="#{personMB.updatePerson()}" oncomplete="dlg.hide()" update=":tabview"/> 
+                    </f:facet>
+                </h:panelGrid>
+                    </h:form>
+            </p:dialog>
+        </p:outputPanel>
+
+
+    </h:body>
+</html>
